@@ -1,9 +1,13 @@
 package example.org.springboot.web;
 
+import example.org.springboot.config.auth.SecurityConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -17,23 +21,28 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)//테스트 진행 시 JUnit에 내장된 실행자 외에 다른 실행자 실행
 //여기서는 SpringRunner라는 스프링 실행자 사용
 //스프링부트 테스트와 JUnit 사이에 연결자 역할
-@WebMvcTest(controllers = HelloController.class)
+@WebMvcTest(controllers = HelloController.class,
+        excludeFilters = {
+        @ComponentScan.Filter(type= FilterType.ASSIGNABLE_TYPE, classes= SecurityConfig.class) }
+)
 public class HelloControllerTest {
 
     @Autowired //스프링이 관리하는 Bean 주입받음
     private MockMvc mvc; //스프링 MVC 테스트 시작점
     //이 클래스를 통해 HTTP GET, POST 등에 대한 API 테스트 할 수 있음
 
+    @WithMockUser(roles="USER") //가짜로 인증된 사용자 생성
     @Test
-    public void helloTest() throws Exception{
+    public void hello가_리턴된다() throws Exception{
         String hello= "hello";
         mvc.perform(get("/hello"))//MockMvc를 통해 /hello 주소로 HTTP GET 요청
                 .andExpect(status().isOk()) //mvc.perform 결과 검증 / HTTP Header의 Status 검증 / Ok(200) 인지 아닌지 검증
                 .andExpect(content().string(hello)); //응답 본문 내용 검증
     }
 
+    @WithMockUser(roles="USER") //가짜로 인증된 사용자 생성
     @Test
-    public void helloDtoTest() throws Exception{
+    public void helloDto가_리턴된다() throws Exception{
         String name="hello";
         int amount= 1000;
 
