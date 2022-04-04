@@ -1,6 +1,6 @@
 # 프로젝트 제외 경로
 .gradle
 .idea
-.settings.gradle
+#.settings.gradle
 #클라이언트 ID, 비번 보안 방지
 application-oauth.properties
