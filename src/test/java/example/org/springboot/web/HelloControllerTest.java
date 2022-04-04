@@ -33,7 +33,7 @@ public class HelloControllerTest {
 
     @WithMockUser(roles="USER") //가짜로 인증된 사용자 생성
     @Test
-    public void hello가_리턴된다() throws Exception{
+    public void hello_return() throws Exception{
         String hello= "hello";
         mvc.perform(get("/hello"))//MockMvc를 통해 /hello 주소로 HTTP GET 요청
                 .andExpect(status().isOk()) //mvc.perform 결과 검증 / HTTP Header의 Status 검증 / Ok(200) 인지 아닌지 검증
@@ -42,7 +42,7 @@ public class HelloControllerTest {
 
     @WithMockUser(roles="USER") //가짜로 인증된 사용자 생성
     @Test
-    public void helloDto가_리턴된다() throws Exception{
+    public void helloDto_return() throws Exception{
         String name="hello";
         int amount= 1000;
 
