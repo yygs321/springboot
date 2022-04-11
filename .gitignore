@@ -3,3 +3,6 @@
 .idea
 #클라이언트 ID, 비번 보안 방지
 application-oauth.properties
+
+build
+out
